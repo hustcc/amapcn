@@ -39,7 +39,7 @@ export function Header({ className, leftContent }: HeaderProps) {
             <TooltipTrigger asChild>
               <Button variant="ghost" size="sm" asChild>
                 <a
-                  href="https://github.com/sponsors/AnmolSaini16"
+                  href="https://github.com/sponsors/hustcc"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

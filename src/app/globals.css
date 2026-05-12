@@ -123,6 +123,10 @@
   }
 }
 
+.container {
+  @apply px-6;
+}
+
 @keyframes fade-up {
   from {
     opacity: 0;
