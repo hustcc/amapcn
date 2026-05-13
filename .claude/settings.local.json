@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__codefusesearchmcp__webFetch",
+      "mcp__codefusesearchmcp__webSearch",
+      "Bash(curl -s \"https://api.github.com/repos/AnmolSaini16/mapcn/git/trees/main?recursive=1\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(t['path']\\) for t in data.get\\('tree',[]\\) if 'block' in t['path'].lower\\(\\) or t['path'].startswith\\('src/app/blocks'\\) or t['path'].startswith\\('src/content'\\)]\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(t['path']\\) for t in data.get\\('tree',[]\\) if 'block' in t['path'].lower\\(\\)]\")",
+      "Bash(curl *)",
+      "Bash(python3 -c \"import sys,json,base64; data=json.load\\(sys.stdin\\); print\\(base64.b64decode\\(data['content']\\).decode\\(\\)\\)\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(json.dumps\\(item, indent=2\\)\\) for item in data['items'] if item.get\\('type'\\) == 'registry:block']\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(t['path']\\) for t in data.get\\('tree',[]\\) if t['path'].startswith\\('src/app/\\(main\\)/view'\\)]\")",
+      "Bash(python3 -c \"import sys,json,base64; data=json.load\\(sys.stdin\\); print\\(base64.b64decode\\(data['content']\\).decode\\(\\)\\)\" echo \"\" done)",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(x['path']\\) for x in data['tree'] if x['type']=='blob' and \\(x['path'].startswith\\('src/'\\) or x['path'] == 'README.md'\\)]\")",
+      "Bash(npx shadcn@latest *)",
+      "Bash(npx tsc *)"
+    ]
+  }
+}

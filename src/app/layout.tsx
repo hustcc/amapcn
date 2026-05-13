@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { Analytics } from "@vercel/analytics/next";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
@@ -102,8 +101,7 @@ export default function RootLayout({
         <ThemeProvider>
           <div className="flex-1">{children}</div>
           <Footer />
-          <Analytics />
-        </ThemeProvider>
+                  </ThemeProvider>
       </body>
     </html>
   );

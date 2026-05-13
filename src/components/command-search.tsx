@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { Search } from "lucide-react";
+import { Search, BarChart3, Truck, Network, LayoutGrid } from "lucide-react";
 
 import {
   CommandDialog,
@@ -14,6 +14,13 @@ import {
 } from "@/components/ui/command";
 import { Kbd } from "@/components/ui/kbd";
 import { docsNavigation } from "@/lib/docs-navigation";
+
+const blocksItems = [
+  { title: "Blocks", href: "/blocks", icon: LayoutGrid },
+  { title: "Analytics Dashboard", href: "/blocks#analytics-dashboard", icon: BarChart3 },
+  { title: "Delivery Tracker", href: "/blocks#delivery-tracker", icon: Truck },
+  { title: "Logistics Network", href: "/blocks#logistics-network", icon: Network },
+];
 
 export function CommandSearch() {
   const [open, setOpen] = React.useState(false);
@@ -56,6 +63,18 @@ export function CommandSearch() {
         <CommandInput placeholder="Type to search..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
+          <CommandGroup heading="Blocks">
+            {blocksItems.map((item) => (
+              <CommandItem
+                key={item.href}
+                value={item.title}
+                onSelect={() => handleSelect(item.href)}
+              >
+                <item.icon className="size-4" />
+                <span>{item.title}</span>
+              </CommandItem>
+            ))}
+          </CommandGroup>
           {docsNavigation.map((group) => (
             <CommandGroup key={group.title} heading={group.title}>
               {group.items.map((item) => (

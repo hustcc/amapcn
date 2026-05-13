@@ -33,6 +33,12 @@ export function Footer() {
         </div>
         <div className="flex items-center gap-6">
           <Link
+            href="/blocks"
+            className="hover:text-foreground transition-colors"
+          >
+            Blocks
+          </Link>
+          <Link
             href="/docs"
             className="hover:text-foreground transition-colors"
           >

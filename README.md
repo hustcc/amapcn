@@ -1,10 +1,8 @@
-<h1 align="center">ai-map</h1>
+<h1 align="center">🗺️ ai-map for China! 🇨🇳</h1>
 
-<p align="center">
-  Free & open-source, ready-to-use, customizable map components for React.
-<br/>
-  Zero config. One command setup. Built on <a href="https://lbs.amap.com/">AMap (高德地图)</a>, styled with <a href="https://tailwindcss.com/">Tailwind</a>, works seamlessly with <a href="https://ui.shadcn.com/">shadcn/ui</a>.
-</p>
+Beautiful maps for China, made simple. Free & open-source, ready-to-use, customizable map components for React.
+
+Zero config. One command setup. Built on <a href="https://lbs.amap.com/">AMap (高德地图)</a>, styled with <a href="https://tailwindcss.com/">Tailwind</a>, works seamlessly with <a href="https://ui.shadcn.com/">shadcn/ui</a>.
 
 <p align="center">
   <a href="https://map.ling.pub/docs">Get Started</a> ·
@@ -13,11 +11,18 @@
 </p>
 
 <p align="center">
-  <img width="3172" height="2356" alt="image" src="https://github.com/user-attachments/assets/27ac5eac-252a-40f9-9433-b6a01064b519" />
+  <img width="1024" alt="ai-map" src="https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*KpQ6TY5Y1OIAAAAAgBAAAAgAemJ7AQ/fmt.avif" />
 </p>
 
+## 🧩 Using with shadcn/ui
 
-## Features
+Add ai-map components to your project using the [shadcn/ui](https://ui.shadcn.com/) CLI:
+
+```bash
+npx shadcn@latest add https://map.ling.pub/map.json
+```
+
+## ✨ Features
 
 - 🎨 **Theme-aware** — Automatically adapts to light/dark mode
 - 🎯 **Zero config** — Works out of the box with sensible defaults
@@ -28,7 +33,7 @@
 - 🛤️ **Routes** — Draw routes and paths on your maps
 - 🎮 **Controls** — Zoom, compass, locate, and fullscreen controls
 
-## AMap Terms of Service
+## 📜 AMap Terms of Service
 
 This project uses [AMap (高德地图)](https://lbs.amap.com/) JS API.
 
@@ -36,7 +41,7 @@ This project uses [AMap (高德地图)](https://lbs.amap.com/) JS API.
 - **Commercial use**: Please review [AMap's Terms of Service](https://lbs.amap.com/terms) for commercial licensing details.
 - **Non-commercial use**: AMap provides a free tier for developers. See the [developer pricing page](https://lbs.amap.com/dev/index) for details.
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -46,7 +51,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+## 📄 License
 
 MIT License - see the [LICENSE](LICENSE) file for details. 
 
