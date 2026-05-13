@@ -1,10 +1,10 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "ai-map",
-  "homepage": "https://github.com/hustcc/ai-map",
+  "name": "amapcn",
+  "homepage": "https://github.com/hustcc/amapcn",
   "items": [
     {
-      "name": "map",
+      "name": "amap",
       "type": "registry:ui",
       "title": "Map",
       "description": "An AMap (高德地图)-powered map component with markers, popups, tooltips, routes, and controls.",

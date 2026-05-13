@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "map",
+  "name": "amap",
   "title": "Map",
   "description": "An AMap (高德地图)-powered map component with markers, popups, tooltips, routes, and controls.",
   "dependencies": [
