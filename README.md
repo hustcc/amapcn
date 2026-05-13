@@ -12,6 +12,11 @@
   <a href="https://map.ling.pub/docs/basic-map">Components</a>
 </p>
 
+<p align="center">
+  <img width="3172" height="2356" alt="image" src="https://github.com/user-attachments/assets/27ac5eac-252a-40f9-9433-b6a01064b519" />
+</p>
+
+
 ## Features
 
 - 🎨 **Theme-aware** — Automatically adapts to light/dark mode
