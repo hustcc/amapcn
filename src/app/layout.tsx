@@ -10,7 +10,7 @@ const geist = GeistSans;
 const geistMono = GeistMono;
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://map.ling.pub";
-const siteName = "ai-map";
+const siteName = "amapcn";
 const creator = "https://github.com/hustcc";
 const siteDescription =
   "A collection of beautifully designed, accessible, and customizable map components for 高德地图 (AMap/Gaode). Built on AMap JS API. Styled with Tailwind CSS. Works with shadcn/ui.";
@@ -18,8 +18,8 @@ const siteDescription =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "ai-map - Beautiful AMap components made simple",
-    template: "%s - ai-map",
+    default: "amapcn - Beautiful AMap components made simple",
+    template: "%s - amapcn",
   },
   description: siteDescription,
   keywords: [
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     { name: "hustcc", url: "https://github.com/hustcc" },
   ],
   creator: "hustcc",
-  publisher: "ai-map",
+  publisher: "amapcn",
   robots: {
     index: true,
     follow: true,
@@ -62,20 +62,20 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: siteName,
-    title: "ai-map - Beautiful AMap components made simple",
+    title: "amapcn - Beautiful AMap components made simple",
     description: siteDescription,
     images: [
       {
         url: "/banner.png",
         width: 1200,
         height: 630,
-        alt: "ai-map - Beautiful maps, made simple",
+        alt: "amapcn - Beautiful maps, made simple",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ai-map - Beautiful AMap components made simple",
+    title: "amapcn - Beautiful AMap components made simple",
     description: siteDescription,
     creator: creator,
     images: ["/banner.png"],

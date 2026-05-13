@@ -38,3 +38,6 @@ next-env.d.ts
 # lock files
 package-lock.json
 pnpm-lock.yaml
+
+# generated build artifacts
+/public/

@@ -23,7 +23,7 @@ export function Header({ className, leftContent }: HeaderProps) {
             className="flex items-center gap-1.5 hover:opacity-80 transition-opacity"
           >
             <MapPin className="size-4" />
-            <span className="font-semibold tracking-tight">ai-map</span>
+            <span className="font-semibold tracking-tight">amapcn</span>
           </Link>
           <Separator orientation="vertical" className="hidden sm:block" />
           <Link

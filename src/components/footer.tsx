@@ -5,7 +5,7 @@ export function Footer() {
     <footer className="w-full py-8 border-t border-border/40 bg-muted/20">
       <div className="container flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
         <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
-          <span>© {new Date().getFullYear()} ai-map</span>
+          <span>© {new Date().getFullYear()} amapcn</span>
           <span className="text-border">•</span>
           <span>
             Built by{" "}
@@ -45,7 +45,7 @@ export function Footer() {
             Documentation
           </Link>
           <a
-            href="https://github.com/hustcc/ai-map"
+            href="https://github.com/hustcc/amapcn"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-foreground transition-colors"

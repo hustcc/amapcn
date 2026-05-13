@@ -7,7 +7,7 @@ export async function GitHubButton() {
   return (
     <Button variant="ghost" size="sm" asChild>
       <Link
-        href="https://github.com/hustcc/ai-map"
+        href="https://github.com/hustcc/amapcn"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -31,7 +31,7 @@ export async function GitHubButton() {
 export async function StarCount() {
   try {
     const response = await fetch(
-      "https://api.github.com/repos/hustcc/ai-map",
+      "https://api.github.com/repos/hustcc/amapcn",
       { next: { revalidate: 60 } }
     );
 

@@ -48,7 +48,7 @@ export default function IntroductionPage() {
       description="Beautiful, accessible map components."
       next={{ title: "Installation", href: "/docs/installation" }}
       toc={[
-        { title: "Why ai-map?", slug: "why-ai-map" },
+        { title: "Why amapcn?", slug: "why-amapcn" },
         { title: "Why AMap Directly?", slug: "why-amap-directly" },
         { title: "Any Map Style", slug: "any-map-style" },
         { title: "Features", slug: "features" },
@@ -56,7 +56,7 @@ export default function IntroductionPage() {
     >
       <DocsSection>
         <p>
-          <strong className="text-foreground">ai-map</strong> provides
+          <strong className="text-foreground">amapcn</strong> provides
           beautifully designed, accessible, and customizable map components.
           Built on{" "}
           <DocsLink href="https://lbs.amap.com" external>
@@ -74,11 +74,11 @@ export default function IntroductionPage() {
         </p>
       </DocsSection>
 
-      <DocsSection title="Why ai-map?">
+      <DocsSection title="Why amapcn?">
         <p>
           There&apos;s no proper copy-paste, easy-to-use map integration for
           React. Most solutions require complex configurations, API keys, or
-          heavy wrapper libraries. ai-map solves this:
+          heavy wrapper libraries. amapcn solves this:
         </p>
         <ul>
           <li>
@@ -108,7 +108,7 @@ export default function IntroductionPage() {
 
       <DocsSection title="Why AMap Directly?">
         <p>
-          ai-map uses{" "}
+          amapcn uses{" "}
           <DocsLink href="https://lbs.amap.com" external>
             AMap
           </DocsLink>{" "}
@@ -117,7 +117,7 @@ export default function IntroductionPage() {
             react-map-gl
           </DocsLink>
           . This keeps components close to the underlying API — when you copy a
-          ai-map component, you fully own the map instance without extra
+          amapcn component, you fully own the map instance without extra
           framework dependencies.
         </p>
         <p>
@@ -129,7 +129,7 @@ export default function IntroductionPage() {
 
       <DocsSection title="Any Map Style">
         <p>
-          ai-map works with any{" "}
+          amapcn works with any{" "}
           <DocsLink href="https://lbs.amap.com/api/jsapi-v2/guide/map/map-style" external>
             AMap-compatible styles
           </DocsLink>
