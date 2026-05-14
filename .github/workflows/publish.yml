@@ -1,0 +1,39 @@
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - '[0-9]*.[0-9]*.[0-9]*'
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build map package
+        run: pnpm --filter amapcn build
+
+      - name: Copy README
+        run: cp README.md map/README.md
+
+      - name: Publish map package
+        run: npm publish
+        working-directory: map
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
