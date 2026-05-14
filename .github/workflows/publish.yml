@@ -27,7 +27,7 @@ jobs:
         run: pnpm install
 
       - name: Build map package
-        run: pnpm --filter amapcn build
+        run: pnpm --filter ./map build
 
       - name: Copy README
         run: cp README.md map/README.md
