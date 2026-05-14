@@ -7,7 +7,8 @@ Zero config. One command setup. Built on <a href="https://lbs.amap.com/">AMap (�
 <p align="center">
   <a href="https://map.ling.pub/docs">Get Started</a> ·
   <a href="https://map.ling.pub/docs/installation">Installation</a> ·
-  <a href="https://map.ling.pub/docs/basic-map">Components</a>
+  <a href="https://map.ling.pub/docs/basic-map">Components</a> ·
+  <a href="https://github.com/hustcc/ai-map/tree/main/amapcn-skill">SKILL</a>
 </p>
 
 <p align="center">
@@ -20,6 +21,14 @@ Add amapcn components to your project using the [shadcn/ui](https://ui.shadcn.co
 
 ```bash
 npx shadcn@latest add https://map.ling.pub/r/amap.json
+```
+
+## 🤖 Using with Claude Code
+
+Add the amapcn skill to Claude Code for AI-powered map development:
+
+```bash
+claude skill add https://github.com/hustcc/ai-map/tree/main/amapcn-skill
 ```
 
 ## ✨ Features

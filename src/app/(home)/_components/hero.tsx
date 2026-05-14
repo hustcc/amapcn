@@ -87,10 +87,15 @@ export function Hero() {
               <ArrowRight className="size-4" />
             </Link>
           </Button>
-          <Button variant="ghost" size="lg" asChild>
+          <Button size="lg" asChild>
             <Link href="/docs/basic-map" className="text-muted-foreground">
               View Components
             </Link>
+          </Button>
+          <Button variant="ghost" size="lg" asChild>
+            <a href="https://github.com/hustcc/ai-map/tree/main/amapcn-skill" target="_blank" rel="noopener noreferrer" className="text-muted-foreground">
+              🤖 Claude Skill
+            </a>
           </Button>
         </div>
       </div>
