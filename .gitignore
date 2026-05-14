@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -10,11 +10,19 @@
 /coverage
 
 # next.js
-/.next/
-/out/
+.next/
+out/
 
 # production
 /build
+
+# map library build
+map/dist/
+
+# cn registry build output
+cn/dist/
+# cn synced source (generated from map/src/map.tsx)
+cn/src/map.tsx
 
 # misc
 .DS_Store
@@ -35,11 +43,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# lock files
-package-lock.json
-pnpm-lock.yaml
-
 # generated build artifacts
-/public/
+site/public/r/
 
 .claude
+
+pnpm-lock.yaml
+package-lock.json
+yarn.lock

@@ -14,7 +14,7 @@ Root container. Initializes AMap, creates the map instance, provides context, an
 |---|---|---|---|
 | `center` | `[number, number]` | `[116.397428, 39.90923]` | Map center [lng, lat] in GCJ-02 |
 | `zoom` | `number` | `11` | Zoom level (3-18) |
-| `amapKey` | `string` | env `NEXT_PUBLIC_AMAP_KEY` | AMap JS API key |
+| `amapKey` | `string` | — | AMap JS API key |
 | `styles` | `{ light?: string; dark?: string }` | `{ light: "amap://styles/light", dark: "amap://styles/dark" }` | Custom AMap style URLs per theme |
 | `className` | `string` | — | CSS class for container div |
 | `children` | `ReactNode` | — | Child map components |

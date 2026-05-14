@@ -23,6 +23,22 @@ Add amapcn components to your project using the [shadcn/ui](https://ui.shadcn.co
 npx shadcn@latest add https://map.ling.pub/r/amap.json
 ```
 
+```tsx
+import { Map, MapMarker } from "@/components/ui/map";
+```
+
+## 📦 Using with npm
+
+Install the package directly:
+
+```bash
+npm install amapcn
+```
+
+```tsx
+import { Map, MapMarker } from "amapcn";
+```
+
 ## 🤖 Using with Claude Code
 
 Add the amapcn skill to Claude Code for AI-powered map development:

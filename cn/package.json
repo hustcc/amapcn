@@ -1,0 +1,12 @@
+{
+  "name": "amapcn-registry",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "build": "node scripts/sync.mjs && npx shadcn build -o ./dist"
+  },
+  "devDependencies": {
+    "shadcn": "^3.6.2"
+  }
+}

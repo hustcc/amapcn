@@ -9,11 +9,25 @@ amapcn is a React map component library for AMap (Gaode Maps / 高德地图), fo
 
 ## Installation
 
+**npm:**
+
+```bash
+npm install amapcn
+```
+
+```tsx
+import { Map, MapMarker } from "amapcn";
+```
+
+**shadcn/ui:**
+
 ```bash
 npx shadcn@latest add https://map.ling.pub/r/amap.json
 ```
 
-This copies `components/ui/map.tsx` and installs `@amap/amap-jsapi-loader`, `next-themes`, `lucide-react`.
+```tsx
+import { Map, MapMarker } from "@/components/ui/map";
+```
 
 ### API Key
 

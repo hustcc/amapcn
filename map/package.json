@@ -1,0 +1,59 @@
+{
+  "name": "amapcn",
+  "version": "0.1.0",
+  "description": "An AMap (高德地图)-powered map component library for React, styled with Tailwind CSS.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "peerDependencies": {
+    "next-themes": "^0.4",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
+    "clsx": "^2.1.1",
+    "lucide-react": ">=0.300",
+    "tailwind-merge": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.16",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5"
+  },
+  "repository": "git@github.com:hustcc/amapcn.git",
+  "license": "MIT",
+  "keywords": [
+    "amap",
+    "map",
+    "react",
+    "components",
+    "tailwindcss",
+    "shadcn"
+  ],
+  "homepage": "https://map.ling.pub"
+}
