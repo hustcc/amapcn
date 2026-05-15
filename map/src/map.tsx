@@ -1016,7 +1016,9 @@ function MapRoute({
     });
   }, [color, width, opacity, arrows, dashed]);
 
-  // Direction arrow markers rendered as SVG triangles at each segment midpoint
+  // Direction arrow markers rendered as CSS triangles at each segment midpoint.
+  // CSS border-trick triangles are used because SVG elements created via
+  // createElementNS may not render reliably inside AMap.Marker content.
   useEffect(() => {
     // Clean up previous markers first
     arrowMarkersRef.current.forEach((m) => m.setMap(null));
@@ -1029,25 +1031,33 @@ function MapRoute({
       const [x2, y2] = coordinates[i + 1];
       const mx = (x1 + x2) / 2;
       const my = (y1 + y2) / 2;
-      // Bearing from north, clockwise (matches CSS rotate direction)
+      // Compass bearing from north, clockwise
       const angleDeg = Math.atan2(x2 - x1, y2 - y1) * (180 / Math.PI);
-      const el = document.createElement("div");
-      const svgNS = "http://www.w3.org/2000/svg";
-      const svg = document.createElementNS(svgNS, "svg");
-      svg.setAttribute("width", "12");
-      svg.setAttribute("height", "12");
-      svg.setAttribute("viewBox", "0 0 12 12");
-      const poly = document.createElementNS(svgNS, "polygon");
-      poly.setAttribute("transform", `rotate(${angleDeg},6,6)`);
-      poly.setAttribute("points", "6,1 11,11 6,8 1,11");
-      poly.setAttribute("fill", color);
-      poly.setAttribute("opacity", String(opacity));
-      svg.appendChild(poly);
-      el.appendChild(svg);
+      // Wrapper div rotated to the route bearing; 16×14 px encloses the triangle
+      const wrapper = document.createElement("div");
+      wrapper.style.width = "16px";
+      wrapper.style.height = "14px";
+      wrapper.style.overflow = "visible";
+      wrapper.style.transform = `rotate(${angleDeg}deg)`;
+      wrapper.style.opacity = String(opacity);
+      // Set color as a CSS custom property so no user data reaches innerHTML
+      wrapper.style.setProperty("--ac", color);
+      // CSS upward-pointing triangle (tip at top = north at 0° rotation)
+      const tri = document.createElement("div");
+      tri.style.position = "absolute";
+      tri.style.left = "8px"; // center horizontally in the 16 px wrapper
+      tri.style.top = "0";
+      tri.style.width = "0";
+      tri.style.height = "0";
+      tri.style.borderLeft = "8px solid transparent";
+      tri.style.borderRight = "8px solid transparent";
+      tri.style.borderBottom = "14px solid var(--ac)";
+      wrapper.appendChild(tri);
       const marker = new AMap.Marker({
         position: [mx, my],
-        content: el,
-        offset: new AMap.Pixel(-6, -6),
+        content: wrapper,
+        offset: new AMap.Pixel(-8, -7),
+        zIndex: 200,
       });
       marker.setMap(map);
       arrowMarkersRef.current.push(marker);
@@ -1427,7 +1437,14 @@ function MapHeatmap({
     return () => {
       cancelled = true;
       if (heatmapRef.current) {
-        heatmapRef.current.setMap(null);
+        try {
+          // AMap.HeatMap.setMap(null) may call getStatus() on an internal
+          // reference that is already undefined when the page navigates away.
+          // Swallow the error so the teardown doesn't crash the app.
+          heatmapRef.current.setMap(null);
+        } catch {
+          // ignore
+        }
         heatmapRef.current = null;
       }
     };
@@ -1469,7 +1486,11 @@ function MapTrafficLayer({ visible = true, opacity = 1 }: MapTrafficLayerProps) 
 
     return () => {
       if (layerRef.current) {
-        layerRef.current.setMap(null);
+        try {
+          layerRef.current.setMap(null);
+        } catch {
+          // ignore teardown errors
+        }
         layerRef.current = null;
       }
     };
@@ -1515,7 +1536,11 @@ function MapSatelliteLayer({ visible = true, opacity = 1 }: MapSatelliteLayerPro
 
     return () => {
       if (layerRef.current) {
-        layerRef.current.setMap(null);
+        try {
+          layerRef.current.setMap(null);
+        } catch {
+          // ignore teardown errors
+        }
         layerRef.current = null;
       }
     };
