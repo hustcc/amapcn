@@ -51,14 +51,17 @@ export function ComponentPreviewClient({
       </div>
 
       <div className={cn("h-[400px] overflow-hidden", className)}>
-        {activeTab === "preview" ? (
-          <div className="h-full">{children}</div>
-        ) : (
-          <div
-            className="h-full p-4 overflow-auto text-sm bg-muted/20 [&_pre]:bg-transparent! [&_code]:bg-transparent!"
-            dangerouslySetInnerHTML={{ __html: highlightedCode }}
-          />
-        )}
+        {/* Keep both panels mounted to avoid unmounting live map instances */}
+        <div className={cn("h-full", activeTab !== "preview" && "hidden")}>
+          {children}
+        </div>
+        <div
+          className={cn(
+            "h-full p-4 overflow-auto text-sm bg-muted/20 [&_pre]:bg-transparent! [&_code]:bg-transparent!",
+            activeTab !== "code" && "hidden"
+          )}
+          dangerouslySetInnerHTML={{ __html: highlightedCode }}
+        />
       </div>
     </div>
   );
