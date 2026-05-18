@@ -1,6 +1,6 @@
 {
   "name": "amapcn",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An AMap (高德地图)-powered map component library for React, styled with Tailwind CSS.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

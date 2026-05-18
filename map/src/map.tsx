@@ -183,9 +183,12 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       window._AMapSecurityConfig = { securityJsCode: code };
     }
 
+    // Use a ref to track mount state and avoid closure staleness in async callbacks
+    let isMounted = true;
     let map: AMapInstance = null;
 
     import("@amap/amap-jsapi-loader").then(({ default: AMapLoader }) => {
+      if (!isMounted) return;
       return AMapLoader.load({
         key,
         version: "2.0",
@@ -193,7 +196,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       });
     })
       .then((AMap: AMapNS) => {
-        if (!containerRef.current) return;
+        if (!isMounted || !containerRef.current) return;
 
         const initialStyle =
           resolvedTheme === "dark" ? mapStyles.dark : mapStyles.light;
@@ -208,6 +211,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
         });
 
         map.on("complete", () => {
+          if (!isMounted) return;
           setIsLoaded(true);
           onLoadRef.current?.();
         });
@@ -216,12 +220,14 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
         setAmapNS(AMap);
       })
       .catch((err: unknown) => {
+        if (!isMounted) return;
         const error = err instanceof Error ? err : new Error(String(err));
         console.error("AMap load error:", error);
         onErrorRef.current?.(error);
       });
 
     return () => {
+      isMounted = false;
       setIsLoaded(false);
       setMapInstance(null);
       setAmapNS(null);
@@ -350,30 +356,40 @@ function MapMarker({
   visible = true,
 }: MapMarkerProps) {
   const { map, AMap } = useMap();
-  const containerEl = useMemo(
-    () => (typeof document !== "undefined" ? document.createElement("div") : null),
-    []
-  );
+  const [marker, setMarker] = useState<AMapInstance>(null);
 
   const onDragStartRef = useLatestRef(onDragStart);
   const onDragEndRef = useLatestRef(onDragEnd);
 
-  const marker = useMemo(() => {
-    if (!AMap || !containerEl) return null;
-    return new AMap.Marker({
+  // Create marker in effect to handle strict mode correctly
+  useEffect(() => {
+    if (!map || !AMap) return;
+
+    // Create fresh container element for each mount
+    const containerEl = document.createElement("div");
+
+    const newMarker = new AMap.Marker({
       position: [longitude, latitude],
       content: containerEl,
       offset: new AMap.Pixel(0, 0),
       draggable,
     });
+
+    newMarker.setMap(map);
+
+    setMarker(newMarker);
+
+    return () => {
+      newMarker.setMap(null);
+      setMarker(null);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [AMap]);
+  }, [map, AMap]);
 
   useOverlayEvents(marker, { onClick, onMouseEnter, onMouseLeave });
 
   useEffect(() => {
-    if (!map || !marker) return;
-    marker.setMap(map);
+    if (!marker) return;
 
     const handleDragStart = () => {
       const pos = marker.getPosition();
@@ -390,9 +406,8 @@ function MapMarker({
     return () => {
       marker.off("dragstart", handleDragStart);
       marker.off("dragend", handleDragEnd);
-      marker.setMap(null);
     };
-  }, [map, marker]);
+  }, [marker]);
 
   useEffect(() => {
     if (!marker) return;
@@ -435,7 +450,9 @@ type MarkerContentProps = {
 
 function MarkerContent({ children, className }: MarkerContentProps) {
   const { marker } = useMarkerContext();
+
   const el = marker.getContent() as HTMLElement;
+  if (!el) return null;
 
   return createPortal(
     <div className={cn("relative -translate-x-1/2 -translate-y-1/2 cursor-pointer", className)}>
@@ -468,7 +485,9 @@ function MarkerPopup({ children, className, closeButton = false }: MarkerPopupPr
   const infoWindowRef = useRef<AMapInstance>(null);
 
   useEffect(() => {
-    if (!map || !AMap || !container) return;
+    if (!map || !AMap || !container || !marker) return;
+
+    let isMounted = true;
 
     const infoWindow = new AMap.InfoWindow({
       content: container,
@@ -479,6 +498,7 @@ function MarkerPopup({ children, className, closeButton = false }: MarkerPopupPr
     infoWindowRef.current = infoWindow;
 
     const handleClick = () => {
+      if (!isMounted) return;
       if (infoWindow.getIsOpen()) {
         infoWindow.close();
       } else {
@@ -489,11 +509,12 @@ function MarkerPopup({ children, className, closeButton = false }: MarkerPopupPr
     marker.on("click", handleClick);
 
     return () => {
+      isMounted = false;
       marker.off("click", handleClick);
       infoWindow.close();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map, AMap]);
+  }, [map, AMap, marker]);
 
   const handleClose = () => {
     infoWindowRef.current?.close();
@@ -540,7 +561,9 @@ function MarkerTooltip({ children, className }: MarkerTooltipProps) {
   );
 
   useEffect(() => {
-    if (!map || !AMap || !container) return;
+    if (!map || !AMap || !container || !marker) return;
+
+    let isMounted = true;
 
     const tooltip = new AMap.InfoWindow({
       content: container,
@@ -550,6 +573,7 @@ function MarkerTooltip({ children, className }: MarkerTooltipProps) {
     });
 
     const handleMouseOver = () => {
+      if (!isMounted) return;
       tooltip.open(map, marker.getPosition());
     };
     const handleMouseOut = () => {
@@ -560,12 +584,13 @@ function MarkerTooltip({ children, className }: MarkerTooltipProps) {
     marker.on("mouseout", handleMouseOut);
 
     return () => {
+      isMounted = false;
       marker.off("mouseover", handleMouseOver);
       marker.off("mouseout", handleMouseOut);
       tooltip.close();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map, AMap]);
+  }, [map, AMap, marker]);
 
   if (!container) return null;
 
@@ -635,6 +660,8 @@ function MapPopup({
   useEffect(() => {
     if (!map || !AMap || !container) return;
 
+    let isMounted = true;
+
     const infoWindow = new AMap.InfoWindow({
       content: container,
       offset: new AMap.Pixel(0, -10),
@@ -644,9 +671,12 @@ function MapPopup({
     infoWindowRef.current = infoWindow;
     infoWindow.open(map, [longitude, latitude]);
 
-    infoWindow.on("close", () => onCloseRef.current?.());
+    infoWindow.on("close", () => {
+      if (isMounted) onCloseRef.current?.();
+    });
 
     return () => {
+      isMounted = false;
       infoWindow.close();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -948,6 +978,8 @@ function MapRoute({
   useEffect(() => {
     if (!isLoaded || !map || !AMap || !hasCoords) return;
 
+    let isMounted = true;
+
     const polyline = new AMap.Polyline({
       path: coordinates,
       strokeColor: color,
@@ -962,10 +994,13 @@ function MapRoute({
     polyline.setMap(map);
     polylineRef.current = polyline;
 
-    const handleClick = () => onClickRef.current?.();
+    const handleClick = () => {
+      if (isMounted) onClickRef.current?.();
+    };
     polyline.on("click", handleClick);
 
     return () => {
+      isMounted = false;
       polyline.off("click", handleClick);
       polyline.setMap(null);
       polylineRef.current = null;

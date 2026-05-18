@@ -29,7 +29,7 @@ export type TravelPoint = {
   lng: number;
   lat: number;
   name: string;
-  time: string;
+  description: string;
   icon: string;
 };
 
@@ -239,7 +239,7 @@ function PlaceSearch({
 export function TravelMap({ initial }: { initial?: TravelData }) {
   const [data, setData] = useState<TravelData>(initial ?? DEFAULT);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [editVals, setEditVals] = useState({ name: "", time: "", icon: "" });
+  const [editVals, setEditVals] = useState({ name: "", description: "", icon: "" });
   const [iconOpen, setIconOpen] = useState(false);
   const [addMode, setAddMode] = useState(false);
   const [shareMsg, setShareMsg] = useState("");
@@ -273,7 +273,7 @@ export function TravelMap({ initial }: { initial?: TravelData }) {
             lng,
             lat,
             name: `第${d.points.length + 1}站`,
-            time: "",
+            description: "",
             icon: "📍",
           },
         ],
@@ -285,7 +285,7 @@ export function TravelMap({ initial }: { initial?: TravelData }) {
 
   const startEdit = (p: TravelPoint) => {
     setEditingId(p.id);
-    setEditVals({ name: p.name, time: p.time, icon: p.icon });
+    setEditVals({ name: p.name, description: p.description, icon: p.icon });
     setIconOpen(false);
   };
 
@@ -349,6 +349,18 @@ export function TravelMap({ initial }: { initial?: TravelData }) {
           onChange={(e) => setData((d) => ({ ...d, title: e.target.value }))}
           placeholder="旅游线路标题"
         />
+        <button
+          onClick={() => setAddMode((a) => !a)}
+          className={cn(
+            "flex items-center gap-1.5 px-3 h-7 text-xs rounded-md transition-colors shrink-0",
+            addMode
+              ? "bg-primary text-primary-foreground"
+              : "border border-dashed hover:bg-muted",
+          )}
+        >
+          <Plus className="size-3" />
+          {addMode ? "点击地图添加..." : "添加"}
+        </button>
         <ThemeToggleBtn />
         <button
           onClick={handleShare}
@@ -360,157 +372,6 @@ export function TravelMap({ initial }: { initial?: TravelData }) {
       </div>
 
       <div className="flex-1 flex overflow-hidden">
-        {/* Sidebar */}
-        <div className="w-64 flex flex-col border-r bg-background shrink-0 overflow-hidden">
-          <div className="flex-1 overflow-y-auto p-2 space-y-1.5">
-            {data.points.length === 0 && (
-              <p className="text-xs text-muted-foreground text-center py-10 px-3 leading-relaxed">
-                点击下方按钮，然后在地图上选点，开始规划你的旅程
-              </p>
-            )}
-
-            {data.points.map((p, i) => (
-              <div
-                key={p.id}
-                className={cn(
-                  "rounded-lg border text-sm transition-colors",
-                  editingId === p.id
-                    ? "border-primary/60 bg-primary/5"
-                    : "bg-card hover:border-border/70 cursor-pointer",
-                )}
-              >
-                {editingId === p.id ? (
-                  /* Edit mode */
-                  <div className="p-2 space-y-1.5">
-                    <div className="flex items-center gap-1.5">
-                      <div className="relative">
-                        <button
-                          className="text-lg leading-none p-0.5 rounded hover:bg-muted"
-                          onClick={() => setIconOpen((o) => !o)}
-                        >
-                          {editVals.icon}
-                        </button>
-                        {iconOpen && (
-                          <div className="absolute top-full left-0 z-20 mt-1 bg-popover border rounded-lg shadow-lg p-1.5 grid grid-cols-8 gap-0.5 max-h-48 overflow-y-auto w-max">
-                            {ICONS.map((ic) => (
-                              <button
-                                key={ic}
-                                className="text-base hover:bg-muted rounded p-0.5 transition-transform hover:scale-110"
-                                onClick={() => {
-                                  setEditVals((v) => ({ ...v, icon: ic }));
-                                  setIconOpen(false);
-                                }}
-                              >
-                                {ic}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                      <input
-                        autoFocus
-                        className="flex-1 min-w-0 bg-background border rounded px-2 py-0.5 text-xs outline-none focus:ring-1 ring-primary"
-                        value={editVals.name}
-                        onChange={(e) => setEditVals((v) => ({ ...v, name: e.target.value }))}
-                        onKeyDown={(e) => e.key === "Enter" && confirmEdit()}
-                        placeholder="地点名称"
-                      />
-                    </div>
-                    <input
-                      className="w-full bg-background border rounded px-2 py-0.5 text-xs outline-none focus:ring-1 ring-primary"
-                      value={editVals.time}
-                      onChange={(e) => setEditVals((v) => ({ ...v, time: e.target.value }))}
-                      onKeyDown={(e) => e.key === "Enter" && confirmEdit()}
-                      placeholder="时间（如：第1天 09:00）"
-                    />
-                    <div className="flex justify-end gap-1">
-                      <button
-                        onClick={() => setEditingId(null)}
-                        className="p-1 rounded hover:bg-muted"
-                      >
-                        <X className="size-3.5" />
-                      </button>
-                      <button
-                        onClick={confirmEdit}
-                        className="p-1 rounded bg-primary text-primary-foreground hover:bg-primary/90"
-                      >
-                        <Check className="size-3.5" />
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  /* Display mode */
-                  <div
-                    className="group flex items-start gap-2 p-2"
-                    onClick={() => setPanTarget([p.lng, p.lat])}
-                  >
-                    <span className="shrink-0 size-5 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-bold mt-0.5">
-                      {i + 1}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1 font-medium text-xs truncate">
-                        <span className="shrink-0">{p.icon}</span>
-                        <span className="truncate">{p.name}</span>
-                      </div>
-                      {p.time && (
-                        <div className="text-[11px] text-muted-foreground mt-0.5">{p.time}</div>
-                      )}
-                    </div>
-                    <div className="shrink-0 flex flex-col gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="flex gap-0.5">
-                        <button
-                          onClick={() => movePoint(p.id, -1)}
-                          disabled={i === 0}
-                          className="p-0.5 rounded hover:bg-muted disabled:opacity-30"
-                        >
-                          <ChevronUp className="size-3" />
-                        </button>
-                        <button
-                          onClick={() => movePoint(p.id, 1)}
-                          disabled={i === data.points.length - 1}
-                          className="p-0.5 rounded hover:bg-muted disabled:opacity-30"
-                        >
-                          <ChevronDown className="size-3" />
-                        </button>
-                      </div>
-                      <div className="flex gap-0.5">
-                        <button
-                          onClick={() => startEdit(p)}
-                          className="p-0.5 rounded hover:bg-muted"
-                        >
-                          <Pencil className="size-3" />
-                        </button>
-                        <button
-                          onClick={() => deletePoint(p.id)}
-                          className="p-0.5 rounded hover:bg-muted text-destructive"
-                        >
-                          <Trash2 className="size-3" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* Add point button */}
-          <div className="p-2 border-t">
-            <button
-              onClick={() => setAddMode((a) => !a)}
-              className={cn(
-                "w-full flex items-center justify-center gap-1.5 py-1.5 rounded-md text-xs font-medium transition-colors",
-                addMode
-                  ? "bg-primary text-primary-foreground"
-                  : "border border-dashed hover:bg-muted",
-              )}
-            >
-              <Plus className="size-3.5" />
-              {addMode ? "点击地图添加..." : "添加旅游点"}
-            </button>
-          </div>
-        </div>
-
         {/* Map area */}
         <div className={cn("flex-1 relative", addMode && "cursor-crosshair")}>
           {/* Search overlay — top-left of map */}
@@ -626,12 +487,12 @@ export function TravelMap({ initial }: { initial?: TravelData }) {
                         <span className="leading-none">{p.icon}</span>
                         <span>{p.name}</span>
                       </div>
-                      {p.time && (
+                      {p.description && (
                         <div className={cn(
                           "mt-0.5 text-[10px]",
                           editingId === p.id ? "text-primary-foreground/70" : "text-muted-foreground",
                         )}>
-                          {p.time}
+                          {p.description}
                         </div>
                       )}
                       {/* Caret */}
@@ -668,6 +529,96 @@ export function TravelMap({ initial }: { initial?: TravelData }) {
               <button onClick={() => setAddMode(false)}>
                 <X className="size-3 ml-1" />
               </button>
+            </div>
+          )}
+
+          {/* Edit panel - shown when a point is being edited */}
+          {editingId && (
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-72 bg-background/95 backdrop-blur border rounded-lg shadow-lg p-2.5">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <div className="relative">
+                  <button
+                    className="text-base leading-none p-0.5 rounded hover:bg-muted"
+                    onClick={() => setIconOpen((o) => !o)}
+                  >
+                    {editVals.icon}
+                  </button>
+                  {iconOpen && (
+                    <div className="absolute bottom-full left-0 mb-1 bg-popover border rounded-lg shadow-lg p-1 grid grid-cols-8 gap-0.5 max-h-32 overflow-y-auto w-max">
+                      {ICONS.map((ic) => (
+                        <button
+                          key={ic}
+                          className="text-sm hover:bg-muted rounded p-0.5"
+                          onClick={() => {
+                            setEditVals((v) => ({ ...v, icon: ic }));
+                            setIconOpen(false);
+                          }}
+                        >
+                          {ic}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <input
+                  autoFocus
+                  className="flex-1 min-w-0 bg-background border rounded px-1.5 py-1 text-xs outline-none focus:ring-1 ring-primary"
+                  value={editVals.name}
+                  onChange={(e) => setEditVals((v) => ({ ...v, name: e.target.value }))}
+                  onKeyDown={(e) => e.key === "Enter" && confirmEdit()}
+                  placeholder="地点名称"
+                />
+                <button
+                  onClick={() => deletePoint(editingId)}
+                  className="p-0.5 rounded hover:bg-muted text-destructive"
+                  title="删除站点"
+                >
+                  <Trash2 className="size-3" />
+                </button>
+              </div>
+              <input
+                className="w-full bg-background border rounded px-1.5 py-1 text-xs outline-none focus:ring-1 ring-primary mb-1.5"
+                value={editVals.description}
+                onChange={(e) => setEditVals((v) => ({ ...v, description: e.target.value }))}
+                onKeyDown={(e) => e.key === "Enter" && confirmEdit()}
+                placeholder="描述"
+              />
+              <div className="flex justify-between gap-1">
+                <div className="flex gap-0.5">
+                  {data.points.findIndex(p => p.id === editingId) > 0 && (
+                    <button
+                      onClick={() => { movePoint(editingId, -1); }}
+                      className="p-1 rounded hover:bg-muted"
+                      title="上移"
+                    >
+                      <ChevronUp className="size-3" />
+                    </button>
+                  )}
+                  {data.points.findIndex(p => p.id === editingId) < data.points.length - 1 && (
+                    <button
+                      onClick={() => { movePoint(editingId, 1); }}
+                      className="p-1 rounded hover:bg-muted"
+                      title="下移"
+                    >
+                      <ChevronDown className="size-3" />
+                    </button>
+                  )}
+                </div>
+                <div className="flex gap-1">
+                  <button
+                    onClick={() => setEditingId(null)}
+                    className="px-2 py-0.5 rounded hover:bg-muted text-xs"
+                  >
+                    取消
+                  </button>
+                  <button
+                    onClick={confirmEdit}
+                    className="px-2 py-0.5 rounded bg-primary text-primary-foreground hover:bg-primary/90 text-xs"
+                  >
+                    保存
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </div>

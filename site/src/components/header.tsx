@@ -27,16 +27,22 @@ export function Header({ className, leftContent }: HeaderProps) {
           </Link>
           <Separator orientation="vertical" className="hidden sm:block" />
           <Link
+            href="/docs"
+            className="hidden sm:inline-flex text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Docs
+          </Link>
+          <Link
             href="/blocks"
             className="hidden sm:inline-flex text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             Blocks
           </Link>
           <Link
-            href="/docs"
+            href="/s"
             className="hidden sm:inline-flex text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            Docs
+            Share Map
           </Link>
         </div>
         <div className="flex items-center gap-2 h-4.5">
