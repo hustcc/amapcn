@@ -2,6 +2,12 @@
 
 Beautiful maps for China, made simple. Free & open-source, ready-to-use, customizable map components for React.
 
+<p align="center">
+  <a href="https://www.npmjs.com/package/amapcn"><img alt="npm version" src="https://img.shields.io/npm/v/amapcn.svg" /></a>
+  <a href="https://www.npmjs.com/package/amapcn"><img alt="npm downloads" src="https://img.shields.io/npm/dm/amapcn.svg" /></a>
+  <a href="https://github.com/hustcc/amapcn/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/github/license/hustcc/amapcn.svg" /></a>
+</p>
+
 Zero config. One command setup. Built on <a href="https://lbs.amap.com/">AMap (高德地图)</a>, styled with <a href="https://tailwindcss.com/">Tailwind</a>, works seamlessly with <a href="https://ui.shadcn.com/">shadcn/ui</a>.
 
 <p align="center">
