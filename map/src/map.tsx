@@ -525,7 +525,7 @@ function MarkerPopup({ children, className, closeButton = false }: MarkerPopupPr
   return createPortal(
     <div
       className={cn(
-        "relative rounded-md border bg-popover p-3 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
+        "relative w-max max-w-[22rem] rounded-2xl border border-slate-200/80 bg-white/95 p-4 text-slate-900 shadow-xl ring-1 ring-black/5 backdrop-blur-sm animate-in fade-in-0 zoom-in-95 dark:border-slate-800 dark:bg-slate-950/95 dark:text-slate-100 dark:ring-white/10",
         className
       )}
     >
@@ -533,7 +533,7 @@ function MarkerPopup({ children, className, closeButton = false }: MarkerPopupPr
         <button
           type="button"
           onClick={handleClose}
-          className="absolute top-1 right-1 z-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          className="absolute right-2 top-2 z-10 inline-flex h-7 w-7 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/70 dark:text-slate-500 dark:hover:bg-slate-900 dark:hover:text-slate-300"
           aria-label="Close popup"
         >
           <X className="h-4 w-4" />
