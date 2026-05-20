@@ -699,7 +699,7 @@ function MapPopup({
   return createPortal(
     <div
       className={cn(
-        "relative rounded-md border bg-popover p-3 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
+        "relative rounded-md bg-popover p-3 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
         className
       )}
     >
