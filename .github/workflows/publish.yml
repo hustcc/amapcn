@@ -36,3 +36,5 @@ jobs:
       - name: Publish map package
         run: npm publish --provenance --access public
         working-directory: map
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
